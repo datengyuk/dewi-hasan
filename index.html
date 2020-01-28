@@ -726,7 +726,8 @@
     db.collection("dewi-hasan").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
         console.log(`${doc.id} => ${doc.data().nama} , ${doc.data().ucapan}`);
-        $("#chat").append("<li class=you><div class=entete><span class='status green'></span><h2>" + doc.data().nama + "&nbsp;&nbsp;</h2><h3>10:12AM, Today</h3></div><div></div><div class=message>"+ doc.data().ucapan + " </div></li>");
+        var d = new Date(); 
+        $("#chat").append("<li class=you><div class=entete><span class='status green'></span><h2>" + doc.data().nama + "&nbsp;&nbsp;</h2><h3>"+doc.data().waktu+"</h3></div><div></div><div class=message>"+ doc.data().ucapan + " </div></li>");
         
     });
 });
@@ -820,10 +821,13 @@ $(document).ready(function(){
             }).show();
         }
         else{
-
+            var d = new Date();
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var time = ""+d.getHours()+":"+d.getMinutes()+" , "+d.getDate()+"&nbsp;"+months[d.getMonth()]+"&nbsp;"+d.getFullYear();
             db.collection("dewi-hasan").add({
             nama: nama,
-            ucapan: isi
+            ucapan: isi,
+            waktu: time
             })
             .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
