@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -835,8 +834,10 @@ $(document).ready(function(){
             .catch(function(error) {
             console.error("Error adding document: ", error);
             });
+            $("#chat").append("<li class=you><div class=entete><span class='status green'></span><h2>" + nama + "&nbsp;&nbsp;</h2><h3>"+time+"</h3></div><div></div><div class=message>"+ isi + " </div></li>");
 
 
+            $("#myModal").modal("hide");
             new Noty({
                 text: 'Pesan anda berhasil dikirim :)',
                 type: 'success',
@@ -897,8 +898,6 @@ $(document).ready(function(){
                     }
                 }
             }).show();
-
-            $("#myModal").modal("hide");
         }
       });
 });
