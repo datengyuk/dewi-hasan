@@ -21,11 +21,100 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<link rel='stylesheet' href="flaunter.css" />
+    <link rel='stylesheet' href="flaunter.css" />
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+    <link rel="stylesheet" type="text/css" href="noty.css">
+    <script type="text/javascript" src="noty.js"></script>
+    <script type="text/javascript" src="velocity.js"></script>
+    <link rel="stylesheet" type="text/css" href="animate.css">
+    <link rel="stylesheet" type="text/css" href="sunset.css">
+
 
 
    
 <style type="text/css">
+.modal{
+    font-family: "Playfair Display", serif;
+}
+#dariisi{
+    font-size: 17px !important;
+}
+.modal-header, .modal-footer{
+    border: none !important;
+}
+#konfirmasi{
+    border-radius: 5px;
+    padding :10px 40px !important;
+}
+
+    #containerchat{
+        background-color: transparent;
+        padding: 30px;
+        margin-top: 7%;
+        margin-left: 17%;
+        margin-right: 17%;
+    }
+
+.status{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:7px;
+    margin-left:7px;
+}
+.green{
+    background-color:white;
+}
+
+#chat{
+    padding-left:0;
+    margin:0;
+    list-style-type:none;
+    overflow-y:scroll;
+    height:600px;
+    border-top:2px solid #fff;
+    border-bottom:2px solid #fff;
+}
+#chat li{
+    padding:10px 30px;
+}
+#chat h2,#chat h3{
+    display:inline-block;
+    font-size:13px;
+    font-weight:normal;
+}
+#chat h3{
+    color:white;
+}
+#chat .message{
+    font-family: Playfair Display, serif;
+    padding:20px;
+    color:#fff;
+    line-height:25px;
+    max-width:100%;
+    display:inline-block;
+    text-align:left;
+    border-radius:5px;
+}
+#chat .you .message{
+    color:black;
+    background-color:white;
+}
+#chat .{
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+}
+#chat .you .{
+        border-color: transparent transparent #58b666 transparent;
+        margin-left:15px;
+}
+
+
+
     #pad200{
         padding-top: 200px; padding-bottom: 200px;
     }
@@ -42,6 +131,27 @@
             margin-top: 20px;
         }
     @media (max-width:576px) {
+        #chat{
+            height: 370px !important;
+        }
+        #footer .copyright{
+            font-size: 14px !important; margin-top: 5px !important; 
+        }
+        #button-f{
+            padding: 9px 20px !important;
+        }
+        #chat .message{
+            font-size: 12px !important;
+            padding: 10px !important;
+        }
+        #nomarg{
+            margin: 0 !important;
+        }
+        #containerchat{
+            margin: 85px 0 30px 0 !important;
+            border:none;
+            padding: 0 !important;
+        }
         
         .input-f{
             padding: 10px !important;
@@ -203,10 +313,6 @@
 }
 
 </style>
-<script src="https://www.flaunter.com/wp-content/themes/flaunter/js/pace.min.js"></script>
-    <!--[if lt IE 9]>
-        <script src="https://www.flaunter.com/wp-content/themes/flaunter/js/html5shiv.js"></script>
-    <![endif]-->
 
 </head>
 <body class="home page-template page-template-templates page-template-flaunter-home page-template-templatesflaunter-home-php page page-id-4 unknown">
@@ -327,12 +433,12 @@
             <div class="col-lg-2 col-lg-3">
                 <div class="d-none d-sm-none d-md-none d-lg-block section-image section-image-2">
                     <div data-paroller-factor="0.4" data-paroller-type="foreground">
-                        <img width="200" src="wed10.jpg">
+                        <img width="400" src="wed23.jpg">
                     </div>
                 </div>
             </div>
             <div class="col-lg-7 col-xl-6">
-                <img class="section-image-1-mobile" width="400" src="wed1.jpg" alt="home-image-6" style="margin-bottom: 50px">
+                <img class="section-image-2-mobile" width="400" src="wed1.jpg" alt="home-image-6" style="margin-bottom: 50px">
                 <div class="section-title" >
                                             <h5  style="text-align: right" class="wow fadeIn" data-wow-delay="0s">Mempelai Pria</h5>
                                                                 <h1 class="wow fadeIn" data-wow-delay=".3s" style="text-align: right">Hasan Sadidi</h1>
@@ -505,33 +611,64 @@
                 
                         
         </div>
+
                 
     </div>
 </section>
 
 <section id="cta" class="cta-medium cta-decoration">
+        
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <div class="section-title">
-                                                <h2 class="wow fadeIn" data-wow-delay=".2s">Kami berharap kalian dapat hadir dengan mengisi kartu ucapan dibawah ini</h2>                    </div>
+                    <div class="section-title" style="">
+                                                <h2 class="wow fadeIn" data-wow-delay=".2s" style=" margin-top: 30px">Kami berharap kalian dapat hadir dengan mengisi kartu ucapan dibawah ini</h2>                    </div>
                 </div>
             </div>
             <div>
-                <form>
-                    <input type="" name="" class="input-f" placeholder="Masukkan nama anda">
+                    <input type="" name="" class="input-f"  id="nama" placeholder="Masukkan nama anda">
                     <br>
-                    <input type="" name=""  class="input-f" placeholder="Ucapan pernikahan anda">
+                    <input type="" name=""  class="input-f" id="ucapan" placeholder="Ucapan pernikahan anda">
                     <br>
-                    <input type="submit" name="" id="button-f" value="Kirim Ucapan" class="btn btn-primary">
-                </form>
+                    <button id="button-f" class="btn btn-primary" data-toggle="modal" data-target="#myModal"> Kirim Ucapan</button>
+               
             </div>
         </div>
-    </section>
 
-  
+    <div style="text-align: left" id="containerchat">
+        <ul id="chat" style="border:none; font-family: Playfair Display, serif">
+            
+            </ul>      
+    </div>
 
-    <footer id="footer" style="background-color: #ffc2b9; border:none">
+</section>
+<!-- The Modal -->
+  <div class="modal" id="myModal" style="z-index: 9999; position: fixed; top: 30%; margin-left: 5%;text-align: center">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" id="darinama" style="text-align: center"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body" id="dariisi">
+          
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="konfirmasi" style="margin-left: auto; margin-right: auto;">Kirim</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer id="footer" style="background-color: #ffc2b9; border:none; ">
 
         <div class="container">
 
@@ -540,7 +677,7 @@
                 <div class="col-12">
 
 
-                    <p style="position: relative; margin-top: 30px;color: #333" class="copyright">Copyright &copy; 2020 <span style="font-weight: 500;color: white">darikami.id</span>, Ltd. All rights reserved.</p>
+                    <p style="position: relative; margin-top: 30px;color: white" class="copyright">Copyright &copy; 2020 <span style="font-weight: 500;">darikami.id</span>, Ltd. All rights reserved.</p>
 
                 </div>
 
@@ -549,6 +686,9 @@
         </div>
 
     </footer>
+    <script type="">
+        
+    </script>
 
         <script type='text/javascript' src='jquery.js'></script>
 <script type='text/javascript' src='slick.min.js'></script>
@@ -561,6 +701,204 @@
     <script>
         new WOW().init();
     </script>
+    <script>
+                // Initialize Cloud Firestore through Firebase
+    firebase.initializeApp({
+      apiKey: 'AIzaSyBJEeOQBkYCJghN7a-wy6VlPuo4VlM620o',
+      authDomain: 'asia-south1',
+      projectId: 'darikami-v1'
+    });
+
+    var db = firebase.firestore();
+    /*
+    db.collection("dewi-hasan").add({
+    nama: "Ucuy",
+    profile: "Kucing",
+    ucapan: "Saya suka ayam sama ikan"
+    })
+    .then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(function(error) {
+    console.error("Error adding document: ", error);
+    });
+    */
+    db.collection("dewi-hasan").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data().nama} , ${doc.data().ucapan}`);
+        $("#chat").append("<li class=you><div class=entete><span class='status green'></span><h2>" + doc.data().nama + "&nbsp;&nbsp;</h2><h3>10:12AM, Today</h3></div><div></div><div class=message>"+ doc.data().ucapan + " </div></li>");
+        
+    });
+});
+    </script>
+
+    <script type="text/javascript">
+    var nama ="";
+    var isi ="";
+$(document).ready(function(){
+      $("#button-f").click(function(){
+        nama = $("#nama").val();
+        isi = $("#ucapan").val();
+        if (nama == "") {
+                    $("#darinama").text("Siapakah nama anda ?");
+        }
+        else{
+            $("#darinama").text("Dari : "+nama);
+        }
+
+        if (isi == "") {
+            $("#dariisi").text("Apakah anda tidak ingin mengungkapkan ucapan anda  :(");
+        }
+        else{
+            $("#dariisi").text(isi);
+        }
+    });
+      $("#konfirmasi").click(function(){
+        if (nama == "" || isi =="") {
+
+            $("#myModal").modal("hide");
+
+            new Noty({
+                text: 'Pesan anda belum dikirim :)',
+                type: 'warning',
+                layout: 'topRight',
+                theme: 'sunset',
+                 animation: {
+                    open: function (promise) {
+                        var n = this;
+                        new Bounce()
+                            .translate({
+                                from     : {x: 450, y: 0}, to: {x: 0, y: 0},
+                                easing   : "bounce",
+                                duration : 1000,
+                                bounces  : 4,
+                                stiffness: 3
+                            })
+                            .scale({
+                                from     : {x: 1.2, y: 1}, to: {x: 1, y: 1},
+                                easing   : "bounce",
+                                duration : 1000,
+                                delay    : 100,
+                                bounces  : 4,
+                                stiffness: 1
+                            })
+                            .scale({
+                                from     : {x: 1, y: 1.2}, to: {x: 1, y: 1},
+                                easing   : "bounce",
+                                duration : 1000,
+                                delay    : 100,
+                                bounces  : 6,
+                                stiffness: 1
+                            })
+                            .applyTo(n.barDom, {
+                                onComplete: function () {
+                                    promise(function(resolve) {
+                                        resolve();
+                                    })
+                                }
+                            });
+                    },
+                    close: function (promise) {
+                        var n = this;
+                        new Bounce()
+                            .translate({
+                                from     : {x: 0, y: 0}, to: {x: 450, y: 0},
+                                easing   : "bounce",
+                                duration : 500,
+                                bounces  : 4,
+                                stiffness: 1
+                            })
+                            .applyTo(n.barDom, {
+                                onComplete: function () {
+                                    promise(function(resolve) {
+                                        resolve();
+                                    })
+                                }
+                            });
+                    }
+                }
+            }).show();
+        }
+        else{
+
+            db.collection("dewi-hasan").add({
+            nama: nama,
+            ucapan: isi
+            })
+            .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+            console.error("Error adding document: ", error);
+            });
+
+
+            new Noty({
+                text: 'Pesan anda berhasil dikirim :)',
+                type: 'success',
+                layout: 'topRight',
+                theme: 'sunset',
+                 animation: {
+                    open: function (promise) {
+                        var n = this;
+                        new Bounce()
+                            .translate({
+                                from     : {x: 450, y: 0}, to: {x: 0, y: 0},
+                                easing   : "bounce",
+                                duration : 1000,
+                                bounces  : 4,
+                                stiffness: 3
+                            })
+                            .scale({
+                                from     : {x: 1.2, y: 1}, to: {x: 1, y: 1},
+                                easing   : "bounce",
+                                duration : 1000,
+                                delay    : 100,
+                                bounces  : 4,
+                                stiffness: 1
+                            })
+                            .scale({
+                                from     : {x: 1, y: 1.2}, to: {x: 1, y: 1},
+                                easing   : "bounce",
+                                duration : 1000,
+                                delay    : 100,
+                                bounces  : 6,
+                                stiffness: 1
+                            })
+                            .applyTo(n.barDom, {
+                                onComplete: function () {
+                                    promise(function(resolve) {
+                                        resolve();
+                                    })
+                                }
+                            });
+                    },
+                    close: function (promise) {
+                        var n = this;
+                        new Bounce()
+                            .translate({
+                                from     : {x: 0, y: 0}, to: {x: 450, y: 0},
+                                easing   : "bounce",
+                                duration : 500,
+                                bounces  : 4,
+                                stiffness: 1
+                            })
+                            .applyTo(n.barDom, {
+                                onComplete: function () {
+                                    promise(function(resolve) {
+                                        resolve();
+                                    })
+                                }
+                            });
+                    }
+                }
+            }).show();
+
+            $("#myModal").modal("hide");
+        }
+      });
+});
+</script>
 
 </body>
 </html>
