@@ -823,19 +823,8 @@ $(document).ready(function(){
             var d = new Date();
             var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             var time = ""+d.getHours()+":"+d.getMinutes()+" , "+d.getDate()+"&nbsp;"+months[d.getMonth()]+"&nbsp;"+d.getFullYear();
-            db.collection("dewi-hasan").add({
-            nama: nama,
-            ucapan: isi,
-            waktu: time
-            })
-            .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function(error) {
-            console.error("Error adding document: ", error);
-            });
+            
             $("#chat").append("<li class=you><div class=entete><span class='status green'></span><h2>" + nama + "&nbsp;&nbsp;</h2><h3>"+time+"</h3></div><div></div><div class=message>"+ isi + " </div></li>");
-
 
             $("#myModal").modal("hide");
             new Noty({
@@ -898,6 +887,19 @@ $(document).ready(function(){
                     }
                 }
             }).show();
+            
+            db.collection("dewi-hasan").add({
+            nama: nama,
+            ucapan: isi,
+            waktu: time
+            })
+            .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+            console.error("Error adding document: ", error);
+            });
+            
         }
       });
 });
